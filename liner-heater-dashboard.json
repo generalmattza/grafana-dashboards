@@ -20,7 +20,7 @@
   "graphTooltip": 1,
   "id": 1,
   "links": [],
-  "liveNow": false,
+  "liveNow": true,
   "panels": [
     {
       "collapsed": false,
@@ -43,6 +43,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "red",
             "mode": "continuous-YlRd"
           },
           "decimals": 1,
@@ -69,7 +70,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "bot_TC1"
+              "options": "top_TC1"
             },
             "properties": [
               {
@@ -81,7 +82,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "bot_TC2"
+              "options": "top_TC2"
             },
             "properties": [
               {
@@ -93,7 +94,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "bot_TC3"
+              "options": "top_TC3"
             },
             "properties": [
               {
@@ -110,7 +111,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 3,
+      "id": 2,
       "options": {
         "displayMode": "lcd",
         "minVizHeight": 10,
@@ -134,11 +135,11 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"bot_TC1\" or r[\"_field\"] == \"bot_TC2\" or r[\"_field\"] == \"bot_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_TC1\" or r[\"_field\"] == \"top_TC2\" or r[\"_field\"] == \"top_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
-      "title": "Bottom Thermocouples",
+      "title": "Top Thermocouples",
       "type": "bargauge"
     },
     {
@@ -214,6 +215,7 @@
         "legend": {
           "calcs": [
             "last",
+            "min",
             "max"
           ],
           "displayMode": "table",
@@ -311,6 +313,7 @@
         "legend": {
           "calcs": [
             "last",
+            "min",
             "max"
           ],
           "displayMode": "table",
@@ -343,7 +346,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "red",
             "mode": "continuous-YlRd"
           },
           "decimals": 1,
@@ -370,7 +372,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "top_TC1"
+              "options": "bot_TC1"
             },
             "properties": [
               {
@@ -382,7 +384,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "top_TC2"
+              "options": "bot_TC2"
             },
             "properties": [
               {
@@ -394,7 +396,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "top_TC3"
+              "options": "bot_TC3"
             },
             "properties": [
               {
@@ -411,7 +413,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 2,
+      "id": 3,
       "options": {
         "displayMode": "lcd",
         "minVizHeight": 10,
@@ -435,11 +437,11 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_TC1\" or r[\"_field\"] == \"top_TC2\" or r[\"_field\"] == \"top_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"bot_TC1\" or r[\"_field\"] == \"bot_TC2\" or r[\"_field\"] == \"bot_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
-      "title": "Top Thermocouples",
+      "title": "Bottom Thermocouples",
       "type": "bargauge"
     },
     {
@@ -698,7 +700,7 @@
           "color": "rgba(255,0,255,0.7)"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 0
         },
         "legend": {
           "show": true
@@ -1383,20 +1385,7 @@
           },
           "unit": "percent"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "usage_system {cpu=\"cpu-total\", host=\"591ad84c3189\"}"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "CPU Usage"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 10,
@@ -1428,7 +1417,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_user\" or r[\"_field\"] == \"usage_system\")\r\n  |> filter(fn: (r) => r[\"cpu\"] == \"cpu-total\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_user\" or r[\"_field\"] == \"usage_system\")\r\n  |> filter(fn: (r) => r[\"host\"] =~ /.*/)\r\n  |> filter(fn: (r) => r[\"cpu\"] == \"cpu-total\")",
           "refId": "A"
         },
         {
@@ -1437,7 +1426,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start:-7d)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda5\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] =~ /.*/)\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda5\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")",
           "refId": "B"
         },
         {
@@ -1446,7 +1435,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] =~ /.*/)",
           "refId": "C"
         }
       ],
@@ -1460,22 +1449,30 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "usage_system {cpu=\"cpu-total\", host=\"a41227383ca4\", name=\"cpu\"}": false
+              "usage_system {cpu=\"cpu-total\", host=\"a41227383ca4\", name=\"cpu\"}": false,
+              "usage_user {cpu=\"cpu-total\", host=\"a41227383ca4\", name=\"cpu\"}": true,
+              "used_percent {device=\"sda5\", fstype=\"ext4\", host=\"3b91669110a7\", mode=\"rw\", name=\"disk\", path=\"/etc/hostname\"}": false,
+              "used_percent {device=\"sda5\", fstype=\"ext4\", host=\"a41227383ca4\", mode=\"rw\", name=\"disk\", path=\"/etc/hostname\"}": true,
+              "used_percent {host=\"a41227383ca4\", name=\"mem\"}": true
             },
             "indexByName": {},
             "renameByName": {
               "usage_system {cpu=\"cpu-total\", host=\"312979be502d\", name=\"cpu\"}": "CPU (System)",
+              "usage_system {cpu=\"cpu-total\", host=\"3b91669110a7\", name=\"cpu\"}": "CPU (System)",
               "usage_system {cpu=\"cpu-total\", host=\"591ad84c3189\", name=\"cpu\"}": "CPU (System)",
               "usage_system {cpu=\"cpu-total\", host=\"a41227383ca4\", name=\"cpu\"}": "CPU (System)",
               "usage_user {cpu=\"cpu-total\", host=\"312979be502d\", name=\"cpu\"}": "CPU (User)",
+              "usage_user {cpu=\"cpu-total\", host=\"3b91669110a7\", name=\"cpu\"}": "CPU (User)",
               "usage_user {cpu=\"cpu-total\", host=\"591ad84c3189\", name=\"cpu\"}": "CPU (User)",
               "usage_user {cpu=\"cpu-total\", host=\"a41227383ca4\", name=\"cpu\"}": "CPU (User)",
               "used_percent {device=\"sda5\", fstype=\"ext4\", host=\"312979be502d\", mode=\"rw\", name=\"disk\", path=\"/etc/hostname\"}": "Disk",
+              "used_percent {device=\"sda5\", fstype=\"ext4\", host=\"3b91669110a7\", mode=\"rw\", name=\"disk\", path=\"/etc/hostname\"}": "Disk",
               "used_percent {device=\"sda5\", fstype=\"ext4\", host=\"591ad84c3189\", mode=\"rw\", name=\"disk\", path=\"/etc/hostname\"}": "Disk",
-              "used_percent {device=\"sda5\", fstype=\"ext4\", host=\"a41227383ca4\", mode=\"rw\", name=\"disk\", path=\"/etc/hostname\"}": "Disk",
+              "used_percent {device=\"sda5\", fstype=\"ext4\", host=\"a41227383ca4\", mode=\"rw\", name=\"disk\", path=\"/etc/hostname\"}": "",
               "used_percent {host=\"312979be502d\", name=\"mem\"}": "Memory",
+              "used_percent {host=\"3b91669110a7\", name=\"mem\"}": "Memory",
               "used_percent {host=\"591ad84c3189\", name=\"mem\"}": "Memory",
-              "used_percent {host=\"a41227383ca4\", name=\"mem\"}": "Memory"
+              "used_percent {host=\"a41227383ca4\", name=\"mem\"}": ""
             }
           }
         }
@@ -1510,7 +1507,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"logs\")\r\n  |> filter(fn: (r) => r[\"level\"] == \"INFO\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -7d, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"logs\")\r\n  |> filter(fn: (r) => r[\"level\"] == \"INFO\")",
           "refId": "A"
         }
       ],
@@ -1572,7 +1569,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"processes\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"total_threads\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start:-7d)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"processes\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"3b91669110a7\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"total_threads\")",
           "refId": "A"
         }
       ],
@@ -1587,13 +1584,13 @@
     "list": []
   },
   "time": {
-    "from": "2023-12-01T22:13:47.556Z",
-    "to": "2023-12-02T00:38:52.089Z"
+    "from": "2023-12-01T21:26:48.985Z",
+    "to": "2023-12-01T22:54:53.256Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "PZero Liner Heater",
   "uid": "c2f79bf2-8713-4747-aabb-a1b060267132",
-  "version": 53,
+  "version": 65,
   "weekStart": ""
 }
