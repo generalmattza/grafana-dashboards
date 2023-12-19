@@ -36,7 +36,10 @@
       "type": "row"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -104,7 +107,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 2,
+        "w": 4,
         "x": 0,
         "y": 1
       },
@@ -132,7 +135,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_TC1\" or r[\"_field\"] == \"top_TC2\" or r[\"_field\"] == \"top_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_TC1\" or r[\"_field\"] == \"top_TC2\" or r[\"_field\"] == \"top_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -155,6 +158,8 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMax": 80,
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -202,9 +207,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 15,
-        "w": 11,
-        "x": 2,
+        "h": 14,
+        "w": 10,
+        "x": 4,
         "y": 1
       },
       "id": 8,
@@ -217,7 +222,7 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
@@ -254,6 +259,8 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMax": 80,
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -301,9 +308,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 15,
-        "w": 11,
-        "x": 13,
+        "h": 14,
+        "w": 10,
+        "x": 14,
         "y": 1
       },
       "id": 9,
@@ -316,7 +323,7 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "right",
+          "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
@@ -338,7 +345,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -397,15 +407,15 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Zone 3"
+                "value": "Centershaft"
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 2,
+        "h": 7,
+        "w": 4,
         "x": 0,
         "y": 8
       },
@@ -433,7 +443,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"bot_TC1\" or r[\"_field\"] == \"bot_TC2\" or r[\"_field\"] == \"bot_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"bot_TC1\" or r[\"_field\"] == \"bot_TC2\" or r[\"_field\"] == \"bot_TC3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -446,99 +456,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 15
       },
       "id": 12,
       "panels": [],
       "title": "Zonal Temperature",
       "type": "row"
-    },
-    {
-      "datasource": {},
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 120,
-          "min": 0,
-          "noValue": "0",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "celsius"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 0,
-        "y": 17
-      },
-      "id": 15,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.2.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
-          },
-          "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-9]/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
-          "refId": "A"
-        }
-      ],
-      "title": "Temperature Variation",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "includeTimeField": false,
-            "labelsToFields": false,
-            "mode": "seriesToRows",
-            "reducers": [
-              "lastNotNull"
-            ]
-          }
-        },
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "range"
-            ]
-          }
-        }
-      ],
-      "type": "stat"
     },
     {
       "datasource": {
@@ -571,38 +494,13 @@
           },
           "unit": "celsius"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "IR_array_temp7"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Top"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "IR_array_temp0"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Bottom"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 12,
-        "w": 4,
-        "x": 2,
-        "y": 17
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 16
       },
       "id": 19,
       "maxDataPoints": 128,
@@ -630,7 +528,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_array_temp0\" or r[\"_field\"] == \"IR_array_temp7\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_array_temp0\" or r[\"_field\"] == \"IR_array_temp7\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
           "refId": "A"
         },
         {
@@ -639,7 +537,7 @@
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /top_TC[0-9]/ or r[\"_field\"] == \"top_setpoint\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({r with _value: (r.top_TC1 + r.top_TC2 + r.top_TC3)/3.0}))\r\n  |> drop(fn: (column) => column =~ /top_TC[0-9]/)\r\n  |> drop(fn: (column) => column == \"top_setpoint\")\r\n",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /top_TC[0-9]/ or r[\"_field\"] == \"top_setpoint\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({r with _value: (r.top_TC1 + r.top_TC2 + r.top_TC3)/3.0}))\r\n  |> drop(fn: (column) => column =~ /top_TC[0-9]/)\r\n  |> drop(fn: (column) => column == \"top_setpoint\")\r\n",
           "refId": "B"
         },
         {
@@ -648,7 +546,7 @@
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /bot_TC[0-9]/ or r[\"_field\"] == \"bot_setpoint\")\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({r with _value: (r.bot_TC1 + r.bot_TC2 + r.bot_TC3)/3.0}))\r\n  |> drop(fn: (column) => column =~ /bot_TC[0-9]/)\r\n  |> drop(fn: (column) => column == \"bot_setpoint\")\r\n",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /bot_TC[0-9]/ or r[\"_field\"] == \"bot_setpoint\")\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({r with _value: (r.bot_TC1 + r.bot_TC2)/2.0}))\r\n  |> drop(fn: (column) => column =~ /bot_TC[0-9]/)\r\n  |> drop(fn: (column) => column == \"bot_setpoint\")\r\n",
           "refId": "C"
         }
       ],
@@ -661,20 +559,22 @@
         {
           "id": "organize",
           "options": {
-            "excludeByName": {},
+            "excludeByName": {
+              "IR_array_temp7 liner_heater": false
+            },
             "indexByName": {
               "IR_array_temp0 liner_heater": 2,
-              "IR_array_temp7 liner_heater": 3,
+              "IR_array_temp7 liner_heater": 4,
               "Time": 0,
-              "liner_heater": 4,
+              "liner_heater 1": 3,
               "liner_heater 2": 1
             },
             "renameByName": {
-              "IR_array_temp0 liner_heater": "Bottom",
-              "IR_array_temp7 liner_heater": "Top",
+              "IR_array_temp0 liner_heater": "BTM_IR",
+              "IR_array_temp7 liner_heater": "TOP_IR",
               "liner_heater": "Top (Average)",
-              "liner_heater 1": "Top (Average)",
-              "liner_heater 2": "Bottom (Average)"
+              "liner_heater 1": "TOP_TC",
+              "liner_heater 2": "BTM_TC"
             }
           }
         }
@@ -704,12 +604,11 @@
       },
       "gridPos": {
         "h": 12,
-        "w": 9,
+        "w": 8,
         "x": 6,
-        "y": 17
+        "y": 16
       },
       "id": 1,
-      "maxDataPoints": 64,
       "options": {
         "calculate": false,
         "calculation": {
@@ -721,25 +620,25 @@
         },
         "cellGap": 0,
         "cellValues": {
-          "decimals": 0,
+          "decimals": 1,
           "unit": "celsius"
         },
         "color": {
           "exponent": 0.5,
           "fill": "dark-orange",
-          "max": 120,
+          "max": 100,
           "min": 0,
           "mode": "scheme",
           "reverse": false,
           "scale": "exponential",
-          "scheme": "Inferno",
+          "scheme": "RdBu",
           "steps": 64
         },
         "exemplars": {
           "color": "rgba(255,0,255,0.7)"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 0
         },
         "legend": {
           "show": true
@@ -768,7 +667,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-7]/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-7]/)\r\n  |> aggregateWindow(every: 2m, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
           "refId": "A"
         }
       ],
@@ -792,7 +691,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-YlRd"
+            "fixedColor": "red",
+            "mode": "fixed"
           },
           "custom": {
             "axisBorderShow": false,
@@ -800,6 +700,8 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMax": 50,
+            "axisSoftMin": 40,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -810,13 +712,13 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "linear",
+            "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "never",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -828,7 +730,7 @@
           },
           "fieldMinMax": false,
           "mappings": [],
-          "max": 120,
+          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -845,23 +747,51 @@
           },
           "unit": "celsius"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Mean"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IR_ref liner_heater"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 12,
-        "w": 5,
-        "x": 15,
-        "y": 17
+        "w": 6,
+        "x": 14,
+        "y": 16
       },
-      "id": 26,
+      "id": 27,
       "maxDataPoints": 256,
       "options": {
         "legend": {
           "calcs": [
-            "lastNotNull",
-            "min",
-            "max",
-            "mean"
+            "max"
           ],
           "displayMode": "table",
           "placement": "bottom",
@@ -879,16 +809,44 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_array_temp0\" or r[\"_field\"] == \"IR_array_temp1\" or r[\"_field\"] == \"IR_array_temp2\" or r[\"_field\"] == \"IR_array_temp4\" or r[\"_field\"] == \"IR_array_temp3\" or r[\"_field\"] == \"IR_array_temp5\" or r[\"_field\"] == \"IR_array_temp6\" or r[\"_field\"] == \"IR_array_temp7\")\r\n  |> aggregateWindow(every: 20s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_array_temp0\" or r[\"_field\"] == \"IR_array_temp1\" or r[\"_field\"] == \"IR_array_temp2\" or r[\"_field\"] == \"IR_array_temp4\" or r[\"_field\"] == \"IR_array_temp3\" or r[\"_field\"] == \"IR_array_temp5\" or r[\"_field\"] == \"IR_array_temp6\" or r[\"_field\"] == \"IR_array_temp7\")\r\n  |> aggregateWindow(every: 30s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+          },
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_ref\")\r\n  |> aggregateWindow(every: 30s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
+          "refId": "B"
         }
       ],
       "transformations": [
         {
-          "id": "renameByRegex",
+          "id": "joinByField",
           "options": {
-            "regex": "(.*([0-9]))",
-            "renamePattern": "$2"
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "IR_array_temp0 liner_heater",
+                "IR_array_temp1 liner_heater",
+                "IR_array_temp2 liner_heater",
+                "IR_array_temp3 liner_heater",
+                "IR_array_temp4 liner_heater",
+                "IR_array_temp5 liner_heater",
+                "IR_array_temp6 liner_heater",
+                "IR_array_temp7 liner_heater"
+              ],
+              "reducer": "mean"
+            },
+            "replaceFields": false
           }
         }
       ],
@@ -905,8 +863,9 @@
             "mode": "continuous-YlRd"
           },
           "decimals": 0,
+          "fieldMinMax": false,
           "mappings": [],
-          "max": 120,
+          "max": 80,
           "min": 0,
           "noValue": "0",
           "thresholds": {
@@ -930,7 +889,7 @@
         "h": 12,
         "w": 4,
         "x": 20,
-        "y": 17
+        "y": 16
       },
       "id": 6,
       "maxDataPoints": 256,
@@ -958,7 +917,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-9]/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-9]/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -998,7 +957,10 @@
       "type": "bargauge"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1027,12 +989,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 3,
         "w": 2,
         "x": 0,
-        "y": 21
+        "y": 23
       },
-      "id": 10,
+      "id": 25,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1060,7 +1022,97 @@
           "refId": "A"
         }
       ],
-      "title": "Average Temperature",
+      "title": "Minimum",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "labelsToFields": false,
+            "mode": "seriesToRows",
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "min"
+            ]
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 120,
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 23
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
+          },
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[1-6]/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Mean (1-6)",
       "transformations": [
         {
           "id": "reduce",
@@ -1117,12 +1169,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 3,
         "w": 2,
-        "x": 0,
-        "y": 25
+        "x": 4,
+        "y": 23
       },
-      "id": 25,
+      "id": 15,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1146,11 +1198,11 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-9]/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[1-6]/)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A"
         }
       ],
-      "title": "Min Temperature",
+      "title": "Variation (1-6)",
       "transformations": [
         {
           "id": "reduce",
@@ -1167,7 +1219,7 @@
           "id": "reduce",
           "options": {
             "reducers": [
-              "min"
+              "range"
             ]
           }
         }
@@ -1175,12 +1227,107 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 70,
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 45
+              },
+              {
+                "color": "red",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 0,
+        "y": 26
+      },
+      "id": 28,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "valueMode": "color"
+      },
+      "pluginVersion": "10.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
+          },
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_ref\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "IR Sensor Temperature",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "labelsToFields": false,
+            "mode": "seriesToRows",
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "range"
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 28
       },
       "id": 17,
       "panels": [],
@@ -1225,9 +1372,9 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 2,
+        "w": 3,
         "x": 0,
-        "y": 30
+        "y": 29
       },
       "id": 24,
       "options": {
@@ -1254,7 +1401,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_setpoint\" or r[\"_field\"] == \"bot_setpoint\")\r\n  |> aggregateWindow(every: 20s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_setpoint\" or r[\"_field\"] == \"bot_setpoint\")\r\n  |> aggregateWindow(every: 5s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -1322,9 +1469,9 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 2,
-        "x": 2,
-        "y": 30
+        "w": 3,
+        "x": 3,
+        "y": 29
       },
       "id": 7,
       "options": {
@@ -1351,7 +1498,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /.*_PID/)\r\n  |> map(fn: (r) => ({ r with _value: r._value * (100.0/255.0)}))\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /.*_PID/)\r\n  |> map(fn: (r) => ({ r with _value: r._value * (100.0/255.0)}))\r\n  |> aggregateWindow(every: 5s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -1383,7 +1530,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-reds"
+            "mode": "palette-classic"
           },
           "custom": {
             "axisBorderShow": false,
@@ -1393,7 +1540,7 @@
             "axisPlacement": "left",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 19,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1402,6 +1549,9 @@
             },
             "insertNulls": false,
             "lineInterpolation": "stepAfter",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -1411,7 +1561,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "percent"
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1419,7 +1569,6 @@
           },
           "decimals": 0,
           "mappings": [],
-          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -1440,9 +1589,9 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 20,
-        "x": 4,
-        "y": 30
+        "w": 18,
+        "x": 6,
+        "y": 29
       },
       "id": 13,
       "maxDataPoints": 512,
@@ -1470,17 +1619,8 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_PID\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^(top|bot)_PID/)\r\n  |> map(fn: (r) => ({r with _value: r._value*(100.0/255.0)}))\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
-          },
-          "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"bot_PID\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "B"
         }
       ],
       "title": "Heater Power",
@@ -1509,7 +1649,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 38
       },
       "id": 16,
       "panels": [],
@@ -1557,9 +1697,9 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 2,
+        "w": 3,
         "x": 0,
-        "y": 40
+        "y": 39
       },
       "id": 23,
       "maxDataPoints": 32,
@@ -1588,7 +1728,7 @@
             "type": "influxdb",
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"bot_batterylevel\" or r[\"_field\"] == \"top_batterylevel\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> last()",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start:-1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"bot_batterylevel\" or r[\"_field\"] == \"top_batterylevel\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> last()",
           "refId": "A"
         }
       ],
@@ -1671,8 +1811,8 @@
       "gridPos": {
         "h": 11,
         "w": 6,
-        "x": 2,
-        "y": 40
+        "x": 3,
+        "y": 39
       },
       "id": 4,
       "maxDataPoints": 128,
@@ -1699,7 +1839,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1h)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SD_card_status\" or r[\"_field\"] == \"logging_status\" or r[\"_field\"] == \"bot_batwarning\" or r[\"_field\"] == \"top_batwarning\" )\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"SD_card_status\" or r[\"_field\"] == \"logging_status\" or r[\"_field\"] == \"bot_batwarning\" or r[\"_field\"] == \"top_batwarning\" )\r\n  |> aggregateWindow(every: 10s, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A"
         }
       ],
@@ -1798,8 +1938,8 @@
       "gridPos": {
         "h": 11,
         "w": 6,
-        "x": 8,
-        "y": 40
+        "x": 9,
+        "y": 39
       },
       "id": 21,
       "options": {
@@ -1825,7 +1965,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_user\" or r[\"_field\"] == \"usage_system\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"cpu\"] == \"cpu-total\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_user\" or r[\"_field\"] == \"usage_system\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"cpu\"] == \"cpu-total\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         },
         {
@@ -1834,7 +1974,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda5\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda5\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "B"
         },
         {
@@ -1843,7 +1983,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "C"
         },
         {
@@ -1852,7 +1992,7 @@
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
           "hide": false,
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda2\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda2\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "D"
         }
       ],
@@ -1907,9 +2047,9 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 10,
-        "x": 14,
-        "y": 40
+        "w": 9,
+        "x": 15,
+        "y": 39
       },
       "id": 20,
       "options": {
@@ -1928,7 +2068,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -7d, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"logs\")\r\n  |> filter(fn: (r) => r[\"level\"] == \"INFO\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"msg\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"logs\")\r\n  |> filter(fn: (r) => r[\"level\"] == \"INFO\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"msg\")\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)",
           "refId": "A"
         }
       ],
@@ -1936,20 +2076,22 @@
       "type": "logs"
     }
   ],
-  "refresh": "auto",
+  "refresh": false,
   "schemaVersion": 38,
-  "tags": [],
+  "tags": [
+    "prototype-zero"
+  ],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-1h",
-    "to": "now"
+    "from": "2023-12-19T19:50:00.000Z",
+    "to": "2023-12-19T20:49:47.647Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "PZero Liner Heater",
   "uid": "c2f79bf2-8713-4747-aabb-a1b060267132",
-  "version": 14,
+  "version": 47,
   "weekStart": ""
 }
