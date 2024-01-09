@@ -114,6 +114,7 @@
       "id": 2,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -126,9 +127,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -186,6 +188,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.name}",
           "mappings": [],
           "max": 120,
           "min": 0,
@@ -213,7 +216,6 @@
         "y": 1
       },
       "id": 8,
-      "maxDataPoints": 256,
       "options": {
         "legend": {
           "calcs": [
@@ -236,7 +238,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /top_TC[0-9]/ or r[\"_field\"] == \"top_setpoint\")\r\n  |> aggregateWindow(every: 20s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /top_TC[0-9]/ or r[\"_field\"] == \"top_setpoint\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -287,6 +289,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.name}",
           "mappings": [],
           "max": 120,
           "min": 0,
@@ -314,7 +317,6 @@
         "y": 1
       },
       "id": 9,
-      "maxDataPoints": 256,
       "options": {
         "legend": {
           "calcs": [
@@ -337,7 +339,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /bot_TC[0-9]/ or r[\"_field\"] == \"bot_setpoint\")\r\n  |> aggregateWindow(every: 20s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /bot_TC[0-9]/ or r[\"_field\"] == \"bot_setpoint\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         }
       ],
@@ -422,6 +424,7 @@
       "id": 3,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -434,9 +437,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -506,6 +510,7 @@
       "maxDataPoints": 128,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -518,10 +523,11 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -649,6 +655,7 @@
         },
         "tooltip": {
           "show": true,
+          "showColorScale": false,
           "yHistogram": false
         },
         "yAxis": {
@@ -659,7 +666,7 @@
           "unit": "string"
         }
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -667,7 +674,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-7]/)\r\n  |> aggregateWindow(every: 2m, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /IR_array_temp[0-7]/)\r\n  |> aggregateWindow(every: 2m, fn: mean, createEmpty: false)\r\n  ",
           "refId": "A"
         }
       ],
@@ -676,7 +683,7 @@
         {
           "id": "renameByRegex",
           "options": {
-            "regex": "(.*([0-9]))",
+            "regex": "(IR_array_temp([0-9]).*)",
             "renamePattern": "$2"
           }
         }
@@ -728,6 +735,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.name}",
           "fieldMinMax": false,
           "mappings": [],
           "max": 100,
@@ -751,7 +759,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Mean"
+              "options": "Mean (Zone 1-6)"
             },
             "properties": [
               {
@@ -766,7 +774,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "IR_ref liner_heater"
+              "options": "IR_ref"
             },
             "properties": [
               {
@@ -774,6 +782,42 @@
                 "value": {
                   "fixedColor": "purple",
                   "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Zone0"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    0,
+                    10
+                  ],
+                  "fill": "dot"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Zone7"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    0,
+                    10
+                  ],
+                  "fill": "dot"
                 }
               }
             ]
@@ -787,15 +831,14 @@
         "y": 16
       },
       "id": 27,
-      "maxDataPoints": 256,
       "options": {
         "legend": {
           "calcs": [
             "max"
           ],
-          "displayMode": "table",
+          "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -809,7 +852,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_array_temp0\" or r[\"_field\"] == \"IR_array_temp1\" or r[\"_field\"] == \"IR_array_temp2\" or r[\"_field\"] == \"IR_array_temp4\" or r[\"_field\"] == \"IR_array_temp3\" or r[\"_field\"] == \"IR_array_temp5\" or r[\"_field\"] == \"IR_array_temp6\" or r[\"_field\"] == \"IR_array_temp7\")\r\n  |> aggregateWindow(every: 30s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_array_temp0\" or r[\"_field\"] == \"IR_array_temp1\" or r[\"_field\"] == \"IR_array_temp2\" or r[\"_field\"] == \"IR_array_temp4\" or r[\"_field\"] == \"IR_array_temp3\" or r[\"_field\"] == \"IR_array_temp5\" or r[\"_field\"] == \"IR_array_temp6\" or r[\"_field\"] == \"IR_array_temp7\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
           "refId": "A"
         },
         {
@@ -818,11 +861,18 @@
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
           "hide": false,
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_ref\")\r\n  |> aggregateWindow(every: 30s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"IR_ref\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")\r\n  ",
           "refId": "B"
         }
       ],
       "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(IR_array_temp([0-9]).*)",
+            "renamePattern": "Zone$2"
+          }
+        },
         {
           "id": "joinByField",
           "options": {
@@ -832,17 +882,16 @@
         {
           "id": "calculateField",
           "options": {
+            "alias": "Mean (Zone 1-6)",
             "mode": "reduceRow",
             "reduce": {
               "include": [
-                "IR_array_temp0 liner_heater",
-                "IR_array_temp1 liner_heater",
-                "IR_array_temp2 liner_heater",
-                "IR_array_temp3 liner_heater",
-                "IR_array_temp4 liner_heater",
-                "IR_array_temp5 liner_heater",
-                "IR_array_temp6 liner_heater",
-                "IR_array_temp7 liner_heater"
+                "Zone1",
+                "Zone2",
+                "Zone3",
+                "Zone4",
+                "Zone5",
+                "Zone6"
               ],
               "reducer": "mean"
             },
@@ -895,6 +944,7 @@
       "maxDataPoints": 256,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "left",
@@ -907,10 +957,11 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -975,8 +1026,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1010,7 +1060,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1065,8 +1115,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1100,7 +1149,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1155,8 +1204,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1190,7 +1238,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1245,8 +1293,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "#EAB839",
@@ -1271,6 +1318,7 @@
       "id": 28,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -1283,9 +1331,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1353,8 +1402,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "light-blue",
-                "value": null
+                "color": "light-blue"
               },
               {
                 "color": "semi-dark-blue",
@@ -1379,6 +1427,7 @@
       "id": 24,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 20,
         "minVizWidth": 0,
         "namePlacement": "left",
@@ -1391,9 +1440,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1450,8 +1500,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "light-blue",
-                "value": null
+                "color": "light-blue"
               },
               {
                 "color": "semi-dark-blue",
@@ -1476,6 +1525,7 @@
       "id": 7,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 20,
         "minVizWidth": 0,
         "namePlacement": "left",
@@ -1488,9 +1538,10 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1568,14 +1619,14 @@
             }
           },
           "decimals": 0,
+          "displayName": "${__field.name}",
           "mappings": [],
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1628,17 +1679,6 @@
         {
           "id": "joinByField",
           "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "bot_PID liner_heater": "Bottom",
-              "top_PID liner_heater": "Top"
-            }
-          }
         }
       ],
       "type": "timeseries"
@@ -1674,8 +1714,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "semi-dark-red",
-                "value": null
+                "color": "semi-dark-red"
               },
               {
                 "color": "orange",
@@ -1705,6 +1744,7 @@
       "maxDataPoints": 32,
       "options": {
         "displayMode": "lcd",
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
@@ -1718,10 +1758,11 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "text": {},
         "valueMode": "text"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -1800,8 +1841,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1810,7 +1850,7 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 6,
+        "w": 4,
         "x": 3,
         "y": 39
       },
@@ -1879,6 +1919,119 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineWidth": 0,
+            "spanNulls": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "Online"
+                },
+                "3": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "Offline"
+                },
+                "4": {
+                  "color": "light-yellow",
+                  "index": 2,
+                  "text": "Timeout"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 5,
+        "x": 7,
+        "y": 39
+      },
+      "id": 29,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+          },
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"http_response\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"result_code\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"method\"] == \"GET\")\r\n  |> aggregateWindow(every: 10s, fn: last, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Panel Title",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "result_code {host=\"gfyvrdatadash\", method=\"GET\", name=\"http_response\", result=\"connection_failed\", server=\"http://p0heaterblock.gf.local/\"}": "Heaterblock (http://p0heaterblock.gf.local/)",
+              "result_code {host=\"gfyvrdatadash\", method=\"GET\", name=\"http_response\", result=\"success\", server=\"http://gfyvrdatadash:3000\", status_code=\"302\"}": "Grafana (http://gfyvrdatadash/)",
+              "result_code {host=\"gfyvrdatadash\", method=\"GET\", name=\"http_response\", result=\"success\", server=\"http://gfyvrdatadash:8086\", status_code=\"200\"}": "InfluxDB (http://gfyvrdatadash/)"
+            }
+          }
+        }
+      ],
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -1922,8 +2075,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1937,8 +2089,8 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 6,
-        "x": 9,
+        "w": 4,
+        "x": 12,
         "y": 39
       },
       "id": 21,
@@ -1992,7 +2144,7 @@
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
           "hide": false,
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda2\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start: -1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda2\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "D"
         }
       ],
@@ -2047,11 +2199,12 @@
       },
       "gridPos": {
         "h": 11,
-        "w": 9,
-        "x": 15,
+        "w": 8,
+        "x": 16,
         "y": 39
       },
       "id": 20,
+      "maxDataPoints": 1000,
       "options": {
         "dedupStrategy": "none",
         "enableLogDetails": true,
@@ -2068,16 +2221,18 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"logs\")\r\n  |> filter(fn: (r) => r[\"level\"] == \"INFO\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"msg\")\r\n  |> aggregateWindow(every: 1s, fn: last, createEmpty: false)",
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: -1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"logs\")\r\n  |> filter(fn: (r) => r[\"level\"] != \"DEBUG\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"msg\")",
           "refId": "A"
         }
       ],
       "title": "Data Server Log",
+      "transformations": [],
       "type": "logs"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 38,
+  "refresh": "auto",
+  "schemaVersion": 39,
   "tags": [
     "prototype-zero"
   ],
@@ -2092,6 +2247,6 @@
   "timezone": "",
   "title": "PZero Liner Heater",
   "uid": "c2f79bf2-8713-4747-aabb-a1b060267132",
-  "version": 47,
+  "version": 59,
   "weekStart": ""
 }
