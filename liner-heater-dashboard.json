@@ -30,6 +30,322 @@
         "x": 0,
         "y": 0
       },
+      "id": 30,
+      "panels": [],
+      "title": "Vessel",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Pressure (Torr)",
+            "axisPlacement": "auto",
+            "axisSoftMax": 800,
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "displayName": "Pressure (Stinger, Upper)",
+          "mappings": [],
+          "max": 760,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 17,
+        "x": 0,
+        "y": 1
+      },
+      "id": 31,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+          },
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"pressure\")\r\n  |> aggregateWindow(every: 30s, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Vessel Pressure",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "decimals": 1,
+          "displayName": "Stinger, Upper",
+          "fieldMinMax": false,
+          "mappings": [],
+          "max": 760,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Torr"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 7,
+        "x": 17,
+        "y": 1
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+          },
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"pressure\")\r\n  |> yield(name: \"vessel_pressure\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Current Pressure",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "decimals": 1,
+          "displayName": "Stinger, Upper",
+          "mappings": [],
+          "max": 760,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "Torr"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 7,
+        "x": 17,
+        "y": 4
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+          },
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"pressure\")\r\n  |> min()\r\n  |> yield(name: \"min\")",
+          "refId": "B"
+        }
+      ],
+      "title": "Minimum Pressure",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 7
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^gas$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+          },
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"gas\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Gas Type",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
       "id": 11,
       "panels": [],
       "title": "Thermocouples",
@@ -109,7 +425,7 @@
         "h": 7,
         "w": 4,
         "x": 0,
-        "y": 1
+        "y": 12
       },
       "id": 2,
       "options": {
@@ -213,7 +529,7 @@
         "h": 14,
         "w": 10,
         "x": 4,
-        "y": 1
+        "y": 12
       },
       "id": 8,
       "options": {
@@ -314,7 +630,7 @@
         "h": 14,
         "w": 10,
         "x": 14,
-        "y": 1
+        "y": 12
       },
       "id": 9,
       "options": {
@@ -419,7 +735,7 @@
         "h": 7,
         "w": 4,
         "x": 0,
-        "y": 8
+        "y": 19
       },
       "id": 3,
       "options": {
@@ -460,7 +776,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 26
       },
       "id": 12,
       "panels": [],
@@ -504,7 +820,7 @@
         "h": 7,
         "w": 6,
         "x": 0,
-        "y": 16
+        "y": 27
       },
       "id": 19,
       "maxDataPoints": 128,
@@ -612,7 +928,7 @@
         "h": 12,
         "w": 8,
         "x": 6,
-        "y": 16
+        "y": 27
       },
       "id": 1,
       "options": {
@@ -828,7 +1144,7 @@
         "h": 12,
         "w": 6,
         "x": 14,
-        "y": 16
+        "y": 27
       },
       "id": 27,
       "options": {
@@ -938,13 +1254,13 @@
         "h": 12,
         "w": 4,
         "x": 20,
-        "y": 16
+        "y": 27
       },
       "id": 6,
       "maxDataPoints": 256,
       "options": {
         "displayMode": "lcd",
-        "maxVizHeight": 300,
+        "maxVizHeight": 64,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "left",
@@ -957,7 +1273,7 @@
           "values": false
         },
         "showUnfilled": true,
-        "sizing": "auto",
+        "sizing": "manual",
         "text": {},
         "valueMode": "color"
       },
@@ -1026,7 +1342,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1042,7 +1359,7 @@
         "h": 3,
         "w": 2,
         "x": 0,
-        "y": 23
+        "y": 34
       },
       "id": 25,
       "options": {
@@ -1115,7 +1432,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1131,7 +1449,7 @@
         "h": 3,
         "w": 2,
         "x": 2,
-        "y": 23
+        "y": 34
       },
       "id": 10,
       "options": {
@@ -1204,7 +1522,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1220,7 +1539,7 @@
         "h": 3,
         "w": 2,
         "x": 4,
-        "y": 23
+        "y": 34
       },
       "id": 15,
       "options": {
@@ -1293,7 +1612,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -1313,7 +1633,7 @@
         "h": 2,
         "w": 6,
         "x": 0,
-        "y": 26
+        "y": 37
       },
       "id": 28,
       "options": {
@@ -1376,7 +1696,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 39
       },
       "id": 17,
       "panels": [],
@@ -1402,7 +1722,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "light-blue"
+                "color": "light-blue",
+                "value": null
               },
               {
                 "color": "semi-dark-blue",
@@ -1422,7 +1743,7 @@
         "h": 9,
         "w": 3,
         "x": 0,
-        "y": 29
+        "y": 40
       },
       "id": 24,
       "options": {
@@ -1500,7 +1821,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "light-blue"
+                "color": "light-blue",
+                "value": null
               },
               {
                 "color": "semi-dark-blue",
@@ -1520,7 +1842,7 @@
         "h": 9,
         "w": 3,
         "x": 3,
-        "y": 29
+        "y": 40
       },
       "id": 7,
       "options": {
@@ -1626,7 +1948,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1642,7 +1965,7 @@
         "h": 9,
         "w": 18,
         "x": 6,
-        "y": 29
+        "y": 40
       },
       "id": 13,
       "maxDataPoints": 512,
@@ -1689,7 +2012,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 49
       },
       "id": 16,
       "panels": [],
@@ -1714,7 +2037,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "semi-dark-red"
+                "color": "semi-dark-red",
+                "value": null
               },
               {
                 "color": "orange",
@@ -1738,7 +2062,7 @@
         "h": 11,
         "w": 3,
         "x": 0,
-        "y": 39
+        "y": 50
       },
       "id": 23,
       "maxDataPoints": 32,
@@ -1841,7 +2165,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -1852,7 +2177,7 @@
         "h": 11,
         "w": 4,
         "x": 3,
-        "y": 39
+        "y": 50
       },
       "id": 4,
       "maxDataPoints": 128,
@@ -1919,7 +2244,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "mode": "thresholds"
           },
           "custom": {
             "fillOpacity": 70,
@@ -1928,10 +2253,9 @@
               "tooltip": false,
               "viz": false
             },
-            "insertNulls": false,
-            "lineWidth": 0,
-            "spanNulls": false
+            "lineWidth": 1
           },
+          "displayName": "${__field.labels.server}",
           "mappings": [
             {
               "options": {
@@ -1958,7 +2282,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1973,17 +2298,16 @@
         "h": 11,
         "w": 5,
         "x": 7,
-        "y": 39
+        "y": 50
       },
       "id": 29,
       "options": {
-        "alignValue": "left",
+        "colWidth": 0.9,
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
-        "mergeValues": true,
         "rowHeight": 0.9,
         "showValue": "auto",
         "tooltip": {
@@ -1998,31 +2322,13 @@
             "type": "influxdb",
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"http_response\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"result_code\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"method\"] == \"GET\")\r\n  |> aggregateWindow(every: 10s, fn: last, createEmpty: false)",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start: -1m, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"http_response\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"result_code\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"method\"] == \"GET\")",
           "refId": "A"
         }
       ],
-      "title": "Panel Title",
-      "transformations": [
-        {
-          "id": "joinByField",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "result_code {host=\"gfyvrdatadash\", method=\"GET\", name=\"http_response\", result=\"connection_failed\", server=\"http://p0heaterblock.gf.local/\"}": "Heaterblock (http://p0heaterblock.gf.local/)",
-              "result_code {host=\"gfyvrdatadash\", method=\"GET\", name=\"http_response\", result=\"success\", server=\"http://gfyvrdatadash:3000\", status_code=\"302\"}": "Grafana (http://gfyvrdatadash/)",
-              "result_code {host=\"gfyvrdatadash\", method=\"GET\", name=\"http_response\", result=\"success\", server=\"http://gfyvrdatadash:8086\", status_code=\"200\"}": "InfluxDB (http://gfyvrdatadash/)"
-            }
-          }
-        }
-      ],
-      "type": "state-timeline"
+      "title": "Services Status",
+      "transformations": [],
+      "type": "status-history"
     },
     {
       "datasource": {
@@ -2075,7 +2381,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2091,7 +2398,7 @@
         "h": 11,
         "w": 4,
         "x": 12,
-        "y": 39
+        "y": 50
       },
       "id": 21,
       "options": {
@@ -2117,7 +2424,7 @@
             "type": "influxdb",
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_user\" or r[\"_field\"] == \"usage_system\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"cpu\"] == \"cpu-total\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"cpu\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"usage_user\" or r[\"_field\"] == \"usage_system\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"cpu\"] == \"cpu-total\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "A"
         },
         {
@@ -2126,7 +2433,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda5\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda5\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "B"
         },
         {
@@ -2135,7 +2442,7 @@
             "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
           },
           "hide": false,
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start:-8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"mem\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "C"
         },
         {
@@ -2144,7 +2451,7 @@
             "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
           },
           "hide": false,
-          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start: -1h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda2\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"system-monitoring\")\r\n  |> range(start: -8h, stop: now())\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"disk\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"gfyvrdatadash\")\r\n  |> filter(fn: (r) => r[\"mode\"] == \"rw\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda2\")\r\n  |> filter(fn: (r) => r[\"fstype\"] == \"ext4\")\r\n  |> filter(fn: (r) => r[\"path\"] == \"/etc/hostname\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
           "refId": "D"
         }
       ],
@@ -2201,7 +2508,7 @@
         "h": 11,
         "w": 8,
         "x": 16,
-        "y": 39
+        "y": 50
       },
       "id": 20,
       "maxDataPoints": 1000,
@@ -2231,7 +2538,7 @@
       "type": "logs"
     }
   ],
-  "refresh": "auto",
+  "refresh": "",
   "schemaVersion": 39,
   "tags": [
     "prototype-zero"
@@ -2240,13 +2547,13 @@
     "list": []
   },
   "time": {
-    "from": "2023-12-19T19:50:00.000Z",
-    "to": "2023-12-19T20:49:47.647Z"
+    "from": "now-3h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "PZero Liner Heater",
   "uid": "c2f79bf2-8713-4747-aabb-a1b060267132",
-  "version": 59,
+  "version": 68,
   "weekStart": ""
 }
