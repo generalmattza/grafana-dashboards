@@ -1,0 +1,933 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "blue",
+        "name": "Shot Events",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "refId": "Anno",
+          "tags": [
+            "Shot Event"
+          ],
+          "type": "tags"
+        }
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 17,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 81,
+      "libraryPanel": {
+        "name": "Pressure Upper",
+        "uid": "fdkc89yyhitq8c"
+      },
+      "title": "Pressure Upper"
+    },
+    {
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 73,
+      "libraryPanel": {
+        "name": "Pressure Lower",
+        "uid": "bdjxpsm25vj7kd"
+      },
+      "title": "Pressure Lower"
+    },
+    {
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 12,
+        "y": 0
+      },
+      "id": 109,
+      "libraryPanel": {
+        "name": "Pyrometers : Mean Liner Temperature",
+        "uid": "ddmli9l7undvkb"
+      },
+      "title": "Pyrometers : Mean Liner Temperature"
+    },
+    {
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 83,
+      "libraryPanel": {
+        "name": "Last Synced Time",
+        "uid": "fdkf5ppdl19moa"
+      },
+      "title": "Last Synced Time"
+    },
+    {
+      "gridPos": {
+        "h": 12,
+        "w": 8,
+        "x": 0,
+        "y": 4
+      },
+      "id": 77,
+      "libraryPanel": {
+        "name": "Pressure Upper - Chart",
+        "uid": "edjxpy53yl98gf"
+      },
+      "title": "Pressure Upper"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 8,
+        "y": 4
+      },
+      "id": 94,
+      "libraryPanel": {
+        "name": "Pyrometer_0 : Zonal Temperature",
+        "uid": "bdmli87tdfz0gd"
+      },
+      "title": "Pyrometer_0 : Zonal Temperature"
+    },
+    {
+      "gridPos": {
+        "h": 12,
+        "w": 7,
+        "x": 11,
+        "y": 4
+      },
+      "id": 91,
+      "libraryPanel": {
+        "name": "Pyrometer_0 : Liner Temperature",
+        "uid": "cdmljd53lyxogd"
+      },
+      "title": "Pyrometer_0 : Liner Temperature"
+    },
+    {
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 18,
+        "y": 4
+      },
+      "id": 102,
+      "libraryPanel": {
+        "name": "Pyrometer_0: Mean Liner Temperature vs Time",
+        "uid": "admli7e34g5j4b"
+      },
+      "title": "Pyrometer_0:  Mean Liner Temperature vs Time"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cdcb84d7-aacb-4442-a3bd-ea73db6a9681"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-reds"
+          },
+          "decimals": 1,
+          "fieldMinMax": true,
+          "mappings": [],
+          "min": 0,
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 8,
+        "y": 12
+      },
+      "id": 66,
+      "options": {
+        "displayMode": "gradient",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "text": {
+          "valueSize": 20
+        },
+        "valueMode": "text"
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cdcb84d7-aacb-4442-a3bd-ea73db6a9681"
+          },
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"id\"] =~ /.*pyrometer_0-[${pyrometer_zone:regex}]-centigrade/)\r\n  |> aggregateWindow(every: ${fast_window_period}, fn: mean, createEmpty: false)\r\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Pyrometer_0: Liner Temperature",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {}
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [],
+              "reducer": "mean"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [],
+              "reducer": "range"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Mean",
+                "Range"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "gridPos": {
+        "h": 12,
+        "w": 8,
+        "x": 0,
+        "y": 16
+      },
+      "id": 79,
+      "libraryPanel": {
+        "name": "Pressure Lower - Chart",
+        "uid": "edjxpxs0oqwowe"
+      },
+      "title": "Pressure Lower"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cdcb84d7-aacb-4442-a3bd-ea73db6a9681"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-reds"
+          },
+          "decimals": 1,
+          "fieldMinMax": true,
+          "mappings": [],
+          "min": 0,
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 8,
+        "y": 16
+      },
+      "id": 103,
+      "options": {
+        "displayMode": "gradient",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "text": {
+          "valueSize": 20
+        },
+        "valueMode": "text"
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "cdcb84d7-aacb-4442-a3bd-ea73db6a9681"
+          },
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"id\"] =~ /.*pyrometer_1-[${pyrometer_zone:regex}]-centigrade/)\r\n  |> aggregateWindow(every: ${fast_window_period}, fn: mean, createEmpty: false)\r\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Pyrometer_1: Liner Temperature",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {}
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [],
+              "reducer": "mean"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [],
+              "reducer": "range"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Mean",
+                "Range"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "gridPos": {
+        "h": 12,
+        "w": 7,
+        "x": 11,
+        "y": 16
+      },
+      "id": 92,
+      "libraryPanel": {
+        "name": "Pyrometer_1 : Liner Temperature",
+        "uid": "ddmljdd70mhvka"
+      },
+      "title": "Pyrometer_1 : Liner Temperature"
+    },
+    {
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 18,
+        "y": 16
+      },
+      "id": 100,
+      "libraryPanel": {
+        "name": "Pyrometer_1 : Mean Liner Temperature vs Time",
+        "uid": "bdmli757hfwn4a"
+      },
+      "title": "Pyrometer_1 :  Mean Liner Temperature vs Time"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 8,
+        "y": 20
+      },
+      "id": 96,
+      "libraryPanel": {
+        "name": "Pyrometer_1 : Zonal Temperature",
+        "uid": "edmli8ehiojr4c"
+      },
+      "title": "Pyrometer_1 : Zonal Temperature"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-blues"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 15,
+        "x": 0,
+        "y": 28
+      },
+      "id": 67,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
+          },
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /top_TC[0-9]/)\r\n  |> aggregateWindow(every: ${fast_window_period}, fn: mean, createEmpty: false)\r\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "TC's - Upper",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": ".*([0-9]).*",
+            "renamePattern": "Zone $1"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-reds"
+          },
+          "decimals": 0,
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/bot.*/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Lower"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/top*/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Upper"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 28
+      },
+      "id": 59,
+      "maxDataPoints": 512,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
+          },
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /^(top|bot)_PID/)\r\n  |> map(fn: (r) => ({r with _value: r._value*(100.0/255.0)}))\r\n  |> aggregateWindow(every: ${fast_window_period}, fn: mean, createEmpty: false)\r\n  |> last()\r\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Heater Power",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {}
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 28
+      },
+      "id": 111,
+      "libraryPanel": {
+        "name": "MQTT Node Status Timeline (Simplified)",
+        "uid": "edmlwopfgpqtcd"
+      },
+      "title": ""
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-blues"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 70,
+          "min": 0,
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 15,
+        "x": 0,
+        "y": 32
+      },
+      "id": 68,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
+          },
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] =~ /bot_TC[0-9]/)\r\n  |> aggregateWindow(every: ${fast_window_period}, fn: mean, createEmpty: false)\r\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "TC's - Lower",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": ".*([0-9]).*",
+            "renamePattern": "Zone $1"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dce0dfe9-3c59-43e8-a140-d1a6b0fb697f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-reds"
+          },
+          "decimals": 0,
+          "displayName": "${__field.name}",
+          "fieldMinMax": false,
+          "mappings": [],
+          "max": 120,
+          "min": 0,
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 120
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 32
+      },
+      "id": 44,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ac99b789-3754-443e-a150-ee9d9522ebb2"
+          },
+          "hide": false,
+          "query": "from(bucket: \"prototype-zero\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"liner_heater\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"top_setpoint\" or r[\"_field\"] == \"bot_setpoint\")\r\n  |> aggregateWindow(every: ${fast_window_period}, fn: last, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Heater Setpoints",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(top.*)",
+            "renamePattern": "Upper"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(bot.*)",
+            "renamePattern": "Lower"
+          }
+        }
+      ],
+      "type": "stat"
+    }
+  ],
+  "refresh": "2s",
+  "schemaVersion": 39,
+  "tags": [
+    "prototype-zero",
+    "stable",
+    "live"
+  ],
+  "templating": {
+    "list": [
+      {
+        "hide": 2,
+        "name": "target_liner_temp",
+        "query": "90",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "value": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Pyrometer Zones",
+        "multi": true,
+        "name": "pyrometer_zone",
+        "options": [
+          {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": true,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": true,
+            "text": "2",
+            "value": "2"
+          },
+          {
+            "selected": true,
+            "text": "3",
+            "value": "3"
+          },
+          {
+            "selected": true,
+            "text": "4",
+            "value": "4"
+          },
+          {
+            "selected": true,
+            "text": "5",
+            "value": "5"
+          },
+          {
+            "selected": true,
+            "text": "6",
+            "value": "6"
+          },
+          {
+            "selected": false,
+            "text": "7",
+            "value": "7"
+          }
+        ],
+        "query": "0,1,2,3,4,5,6,7",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "description": "",
+        "hide": 2,
+        "name": "fast_window_period",
+        "query": "20s",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "description": "",
+        "hide": 2,
+        "name": "slow_window_period",
+        "query": "120s",
+        "skipUrlSync": false,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1s",
+      "2s",
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "PZero Control Room",
+  "uid": "fdmli0woxzq4gd",
+  "version": 11,
+  "weekStart": ""
+}
